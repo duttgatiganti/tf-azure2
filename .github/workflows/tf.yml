@@ -13,7 +13,7 @@ permissions:
 
 jobs:
 
-  terraform:
+  terraform-job:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,25 +21,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Azure Login
+    - name: Azure Login step
       uses: azure/login@v3
       with:
         client-id: ${{ vars.AZURE_CLIENT_ID }}
         tenant-id: ${{ vars.AZURE_TENANT_ID }}
         subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Setup Terraform
+    - name: Setup Terraform step
       uses: hashicorp/setup-terraform@v3
 
-    - name: Terraform Init
+    - name: Terraform Init step
       run: terraform init
 
-    - name: Terraform Validate
+    - name: Terraform Validate step
       run: terraform validate
 
-    - name: Terraform Plan
+    - name: Terraform Plan step
       run: terraform plan
 
-    - name: Terraform Apply
+    - name: Terraform Apply step
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve
